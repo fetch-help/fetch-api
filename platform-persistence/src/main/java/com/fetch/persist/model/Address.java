@@ -1,9 +1,10 @@
 package com.fetch.persist.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 public class Address {
@@ -11,11 +12,17 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Version
+    private long version;
+
     String line1;
     String line2;
     String line3;
     String postalCode;
     String country;
+    @CreationTimestamp
+    private Timestamp createdOn;
+
 
     public Long getId() {
         return id;
@@ -63,5 +70,21 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+    public Timestamp getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Timestamp createdOn) {
+        this.createdOn = createdOn;
     }
 }

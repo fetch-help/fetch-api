@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Order {
+public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToMany
-    private List<OrderItem> items = new ArrayList<OrderItem>();
+    private List<PurchaseItem> items = new ArrayList<PurchaseItem>();
 
     private Timestamp createdOn;
 
@@ -24,11 +24,11 @@ public class Order {
         this.id = id;
     }
 
-    public List<OrderItem> getItems() {
+    public List<PurchaseItem> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItem> items) {
+    public void setItems(List<PurchaseItem> items) {
         this.items = items;
     }
 
@@ -39,4 +39,5 @@ public class Order {
     public void setCreatedOn(Timestamp createdOn) {
         this.createdOn = createdOn;
     }
+
 }

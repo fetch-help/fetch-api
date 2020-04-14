@@ -10,7 +10,10 @@ public class Delivery {
     private Long id;
 
     @OneToOne
-    private Order order;
+    private Purchase purchase;
+
+    @OneToOne
+    private Customer customer;
 
     private Timestamp deliveryScheduledOn;
     private Timestamp deliveredOn;
@@ -23,12 +26,12 @@ public class Delivery {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public Purchase getPurchase() {
+        return purchase;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 
     public Timestamp getDeliveryScheduledOn() {
@@ -45,6 +48,14 @@ public class Delivery {
 
     public void setDeliveredOn(Timestamp deliveredOn) {
         this.deliveredOn = deliveredOn;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
 }
