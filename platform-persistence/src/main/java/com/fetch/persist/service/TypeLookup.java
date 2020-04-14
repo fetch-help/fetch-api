@@ -3,8 +3,7 @@ package com.fetch.persist.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fetch.persist.model.Customer;
-import com.fetch.persist.model.Address;
+import com.fetch.persist.model.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +16,16 @@ public final class TypeLookup {
                 return ((Address) t).getId();
             case "Customer":
                 return ((Customer) t).getId();
+            case "Delivery":
+                return ((Delivery) t).getId();
+            case "Product":
+                return ((Product) t).getId();
+            case "Purchase":
+                return ((Purchase) t).getId();
+            case "PurchaseItem":
+                return ((PurchaseItem) t).getId();
+            case "Supplier":
+                return ((Supplier) t).getId();
         }
         throw new IllegalArgumentException("Invalid type");
     }

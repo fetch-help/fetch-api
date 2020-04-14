@@ -1,5 +1,8 @@
 package com.fetch.persist.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -12,13 +15,18 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Version
+    private long version;
+
     private String name;
     private String contactName;
     private String email;
     private String phone;
     @OneToOne(cascade = CascadeType.MERGE)
     private Address address;
+    @CreationTimestamp
     private Timestamp createdOn;
+    @UpdateTimestamp
     private Timestamp lastUpdatedOn;
 
     @OneToMany
@@ -97,5 +105,13 @@ public class Supplier {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

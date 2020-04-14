@@ -3,14 +3,14 @@ package com.fetch.persist.model;
 import javax.persistence.*;
 
 @Entity
-public class OrderItem {
+public class PurchaseItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "fk_order")
-    private Order order;
+    private Purchase purchase;
 
     @OneToOne
     private Product product;
@@ -25,12 +25,12 @@ public class OrderItem {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public Purchase getPurchase() {
+        return purchase;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 
     public Product getProduct() {
@@ -48,4 +48,5 @@ public class OrderItem {
     public void setQty(Long qty) {
         this.qty = qty;
     }
+
 }
