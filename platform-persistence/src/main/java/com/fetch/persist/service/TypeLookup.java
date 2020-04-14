@@ -36,6 +36,16 @@ public final class TypeLookup {
                 return Address.class;
             case "Customer":
                 return Customer.class;
+            case "Delivery":
+                return Delivery.class;
+            case "Product":
+                return Product.class;
+            case "Purchase":
+                return Purchase.class;
+            case "PurchaseItem":
+                return PurchaseItem.class;
+            case "Supplier":
+                return Supplier.class;
         }
         throw new IllegalArgumentException("Invalid type");
     }

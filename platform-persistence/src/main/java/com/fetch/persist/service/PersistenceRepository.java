@@ -18,6 +18,12 @@ public class PersistenceRepository {
         return (Collection<T>) query.getResultList();
     }
 
+    public <T> Collection<T> findAll(String type, String attribute, Long value) {
+        Query query = em.createQuery("SELECT e FROM "+type+" e WHERE "+attribute +" = ?1" );
+        query.setParameter(1, value);
+        return (Collection<T>) query.getResultList();
+    }
+
     public <T> T find(Class<T> clazz, Long id) {
         return em.find(clazz, id);
     }

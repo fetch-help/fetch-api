@@ -3,6 +3,8 @@ package com.fetch.persist;
 
 import com.fetch.persist.model.Address;
 import com.fetch.persist.model.Customer;
+import com.fetch.persist.model.Product;
+import com.fetch.persist.model.Supplier;
 import com.fetch.persist.service.TypeLookup;
 import org.junit.Test;
 
@@ -22,6 +24,26 @@ public class GenerateJsonTest {
 
         System.out.println(TypeLookup.writeJson(a));
     }
+
+    @Test
+    public void generateSupplier()throws Exception{
+        Supplier c = new Supplier();
+        c.setName("Joes Groceries");
+        c.setContactName("Joe Supplier");
+        System.out.println(TypeLookup.writeJson(c));
+    }
+
+    @Test
+    public void generateProduct()throws Exception{
+        Product c = new Product();
+        c.setName("Milk");
+        c.setPrice(3.00);
+        c.setSupplierId(3L);
+
+        System.out.println(TypeLookup.writeJson(c));
+    }
+
+
 
     @Test
     public void generateCustomer()throws Exception{

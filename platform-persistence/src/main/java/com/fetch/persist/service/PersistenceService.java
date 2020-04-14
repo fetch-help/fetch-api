@@ -19,6 +19,11 @@ public class PersistenceService {
     }
 
     @Transactional
+    public <T> Collection<T> findAll(String type,String attr, Long value) throws JsonProcessingException {
+        return repo.findAll(type, attr, value);
+    }
+
+    @Transactional
     public <T> T find(String id, String type) throws JsonProcessingException {
         Class<T> c = (Class<T>) TypeLookup.findClass(type);
         return repo.find(c, Long.parseLong(id));
