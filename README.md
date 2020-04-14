@@ -1,2 +1,2 @@
 # fetch-api
-API 
+API - Appliction Programming interface
