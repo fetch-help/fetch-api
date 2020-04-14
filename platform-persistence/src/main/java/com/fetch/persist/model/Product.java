@@ -1,5 +1,6 @@
 package com.fetch.persist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,8 +25,13 @@ public class Product {
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
 
-    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "supplier_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Supplier.class, fetch = FetchType.LAZY)
     private Supplier supplier;
+
+    @Column(name = "supplier_id")
+    private Long supplierId;
 
     public Long getId() {
         return id;
@@ -59,12 +65,13 @@ public class Product {
         this.description = description;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+
+    public Long getSupplierId() {
+        return supplierId;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
     }
 
     public long getVersion() {
@@ -90,4 +97,13 @@ public class Product {
     public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
     }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
 }

@@ -29,8 +29,9 @@ public class Supplier {
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
 
-    @OneToMany
-    private List<Product> products = new ArrayList<Product>();
+    private String locale;
+
+    private String currency;
 
     public Supplier() {
     }
@@ -99,19 +100,27 @@ public class Supplier {
         this.lastUpdatedOn = lastUpdatedOn;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
     public long getVersion() {
         return version;
     }
 
     public void setVersion(long version) {
         this.version = version;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
