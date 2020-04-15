@@ -20,5 +20,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14
-    - name: Build with Maven
+    - name: Build Platform Persistence with Maven
       run: mvn -B package --file platform-persistence/pom.xml
+    - name: Build Platform Security with Maven
+      run: mvn -B package --file platform-security/pom.xml
