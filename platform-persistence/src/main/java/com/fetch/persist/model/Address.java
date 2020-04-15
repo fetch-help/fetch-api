@@ -2,11 +2,15 @@ package com.fetch.persist.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Indexed
 public class Address {
 
     @Id
@@ -18,7 +22,11 @@ public class Address {
     String line1;
     String line2;
     String line3;
+
+
+    @Field(termVector = TermVector.YES)
     String postalCode;
+    @Field(termVector = TermVector.YES)
     String country;
     @CreationTimestamp
     private Timestamp createdOn;
