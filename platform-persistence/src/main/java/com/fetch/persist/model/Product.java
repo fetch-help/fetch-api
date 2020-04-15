@@ -3,11 +3,15 @@ package com.fetch.persist.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Indexed
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +19,7 @@ public class Product {
     @Version
     private long version;
 
+    @Field(termVector = TermVector.YES)
     private String name;
 
     private Double price;

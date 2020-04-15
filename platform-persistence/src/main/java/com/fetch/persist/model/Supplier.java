@@ -2,6 +2,9 @@ package com.fetch.persist.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Indexed
 public class Supplier {
 
     @Id
@@ -18,6 +22,7 @@ public class Supplier {
     @Version
     private long version;
 
+    @Field(termVector = TermVector.YES)
     private String name;
     private String contactName;
     private String email;
@@ -28,7 +33,7 @@ public class Supplier {
     private Timestamp createdOn;
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
-
+    @Field(termVector = TermVector.YES)
     private String locale;
 
     private String currency;

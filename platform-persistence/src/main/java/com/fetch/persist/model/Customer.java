@@ -2,12 +2,16 @@ package com.fetch.persist.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
+@Indexed
 public class Customer {
 
     @Id
@@ -15,7 +19,9 @@ public class Customer {
     private Long id;
     @Version
     private long version;
+    @Field(termVector = TermVector.YES)
     private String firstName;
+    @Field(termVector = TermVector.YES)
     private String lastName;
     private String email;
     private String phone;
