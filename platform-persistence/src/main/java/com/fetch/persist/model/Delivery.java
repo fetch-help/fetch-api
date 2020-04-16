@@ -35,26 +35,26 @@ public class Delivery {
     }
 
     public Timestamp getDeliveryScheduledOn() {
-        return deliveryScheduledOn;
+        return new Timestamp(deliveryScheduledOn.getTime());
     }
 
-    public void setDeliveryScheduledOn(Timestamp deliveryScheduledOn) {
-        this.deliveryScheduledOn = deliveryScheduledOn;
+    public void setDeliveryScheduledOn(final Timestamp deliveryScheduledOn) {
+        this.deliveryScheduledOn = new Timestamp(deliveryScheduledOn.getTime());
     }
 
     public Timestamp getDeliveredOn() {
-        return deliveredOn;
+        return new Timestamp(deliveredOn.getTime());
     }
 
-    public void setDeliveredOn(Timestamp deliveredOn) {
-        this.deliveredOn = deliveredOn;
+    public void setDeliveredOn(final Timestamp deliveredOn) {
+        this.deliveredOn = new Timestamp(deliveredOn.getTime());
     }
 
     public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(final Customer customer) {
         this.customer = customer;
     }
 

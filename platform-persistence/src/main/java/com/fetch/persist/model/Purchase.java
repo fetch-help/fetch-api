@@ -20,7 +20,7 @@ public class Purchase {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -28,16 +28,16 @@ public class Purchase {
         return items;
     }
 
-    public void setItems(List<PurchaseItem> items) {
+    public void setItems(final List<PurchaseItem> items) {
         this.items = items;
     }
 
     public Timestamp getCreatedOn() {
-        return createdOn;
+        return new Timestamp(createdOn.getTime());
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreatedOn(final Timestamp createdOn) {
+        this.createdOn = new Timestamp(createdOn.getTime());
     }
 
 }

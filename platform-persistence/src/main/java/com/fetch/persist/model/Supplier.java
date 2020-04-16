@@ -7,10 +7,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Indexed
@@ -85,24 +82,24 @@ public class Supplier {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(final Address address) {
         this.address = address;
     }
 
     public Timestamp getCreatedOn() {
-        return createdOn;
+        return new Timestamp(createdOn.getTime());
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreatedOn(final Timestamp createdOn) {
+        this.createdOn = new Timestamp(createdOn.getTime());
     }
 
     public Timestamp getLastUpdatedOn() {
-        return lastUpdatedOn;
+        return new Timestamp(lastUpdatedOn.getTime());
     }
 
-    public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
+    public void setLastUpdatedOn(final Timestamp lastUpdatedOn) {
+        this.lastUpdatedOn =  new Timestamp(lastUpdatedOn.getTime());
     }
 
     public long getVersion() {

@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class PersistenceApplication {
 
     public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(PersistenceApplication.class, args);
+        SpringApplication.run(PersistenceApplication.class, args);
         //debug(ctx);
     }
 
