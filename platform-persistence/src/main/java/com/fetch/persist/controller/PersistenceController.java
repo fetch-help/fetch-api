@@ -15,31 +15,33 @@ public class PersistenceController {
 
     @GetMapping("findAll")
     @ResponseBody
-    String findAll(@RequestParam String type)throws JsonProcessingException {
+    String findAll(@RequestParam String type) throws JsonProcessingException {
         return TypeLookup.writeJsonList(persistenceService.findAll(type));
     }
 
     @GetMapping("findAllByParentId")
     @ResponseBody
     String findAll(@RequestParam String type, @RequestParam String attr,
-                   @RequestParam Long value)throws JsonProcessingException {
+                   @RequestParam Long value) throws JsonProcessingException {
         return TypeLookup.writeJsonList(persistenceService.findAll(type, attr, value));
     }
 
     @GetMapping("find")
     @ResponseBody
-    String find(@RequestParam String id, @RequestParam String type)throws JsonProcessingException {
+    String find(@RequestParam String id, @RequestParam String type) throws JsonProcessingException {
         return TypeLookup.writeJson(persistenceService.find(id, type));
     }
 
     @PostMapping("save")
     @ResponseBody
-    Long save(@RequestBody String json, @RequestParam String type)throws JsonProcessingException {
+    Long save(@RequestBody String json, @RequestParam String type) throws JsonProcessingException {
         return persistenceService.save(type, json);
     }
 
     @PutMapping("update")
-    void update(@RequestBody String json, @RequestParam String id, @RequestParam String type)throws JsonProcessingException {
+    void update(@RequestBody String json, @RequestParam String id,
+                @RequestParam String type)
+            throws JsonProcessingException {
         persistenceService.update(id, type, json);
     }
 }
