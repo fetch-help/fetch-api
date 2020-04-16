@@ -76,19 +76,19 @@ public class Customer {
     }
 
     public Timestamp getCreatedOn() {
-        return createdOn;
+        return new Timestamp(createdOn.getTime());
     }
 
     public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+        this.createdOn = new Timestamp(createdOn.getTime());
     }
 
     public Timestamp getLastUpdatedOn() {
-        return lastUpdatedOn;
+        return new Timestamp(lastUpdatedOn.getTime());
     }
 
     public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
+        this.lastUpdatedOn = new Timestamp(lastUpdatedOn.getTime());
     }
 
     public void setFirstName(String firstName) {

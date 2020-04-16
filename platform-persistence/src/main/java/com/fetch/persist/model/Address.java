@@ -89,10 +89,10 @@ public class Address {
     }
 
     public Timestamp getCreatedOn() {
-        return createdOn;
+        return new Timestamp(createdOn.getTime());
     }
 
     public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+        this.createdOn = new Timestamp(createdOn.getTime());
     }
 }
