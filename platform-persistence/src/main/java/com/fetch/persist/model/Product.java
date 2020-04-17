@@ -12,10 +12,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Indexed
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Product extends ModelId{
+
     @Version
     private long version;
 
@@ -31,20 +29,12 @@ public class Product {
     private Timestamp lastUpdatedOn;
 
     @JsonIgnore
-    @JoinColumn(name = "supplier_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Supplier.class, fetch = FetchType.LAZY)
-    private Supplier supplier;
+    @JoinColumn(name = "merchant_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Merchant.class, fetch = FetchType.LAZY)
+    private Merchant merchant;
 
-    @Column(name = "supplier_id")
-    private Long supplierId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "merchant_id")
+    private Long merchantId;
 
     public String getName() {
         return name;
@@ -71,12 +61,12 @@ public class Product {
     }
 
 
-    public Long getSupplierId() {
-        return supplierId;
+    public Long getMerchantId() {
+        return merchantId;
     }
 
-    public void setSupplierId(Long supplierId) {
-        this.supplierId = supplierId;
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
     }
 
     public long getVersion() {
@@ -103,12 +93,12 @@ public class Product {
         this.lastUpdatedOn = new Timestamp(lastUpdatedOn.getTime());
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public Merchant getMerchant() {
+        return merchant;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
     }
 
 }

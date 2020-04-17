@@ -34,7 +34,7 @@ public class PersistenceService {
         Class<T> c = (Class<T>) TypeLookup.findClass(type);
         T ob = TypeLookup.getObject(json, c);
         repo.save(c, ob);
-        return TypeLookup.getId(ob, type);
+        return TypeLookup.getId(ob);
     }
     @Transactional
     public <T> void update(String id, String type, String json) throws JsonProcessingException {

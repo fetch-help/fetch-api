@@ -3,11 +3,7 @@ package com.fetch.persist.model;
 import javax.persistence.*;
 
 @Entity
-public class PurchaseItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class PurchaseItem extends ModelId{
 
     @ManyToOne
     private Purchase purchase;
@@ -16,14 +12,6 @@ public class PurchaseItem {
     private Product product;
 
     private Long qty;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Purchase getPurchase() {
         return purchase;

@@ -105,33 +105,33 @@ In the example updates only the first name
 
 To check that the above flow works, find the Customer again
 
-### Create a supplier
+### Create a merchant
 
-Create an address for the supplier as shown in Step 1, then create a Supplier
+Create an address for the merchant as shown in Step 1, then create a Merchant
 
 HTTP POST
 
-http://localhost:8081/api/v1/persist/save?type=Supplier
+http://localhost:8081/api/v1/persist/save?type=Merchant
 ```json
 {
 	"name":"Joes Groceries",
-  "contactName":"Joe Supplier",
+  "contactName":"Joe Merchant",
 	"address":{
 	    "id": 5
    },
   "currency": "GBP"
 }
 ```
-### Find a supplier
+### Find a merchant
 
 HTTP GET
-http://localhost:8081/api/v1/persist/find?type=Supplier&id=6
+http://localhost:8081/api/v1/persist/find?type=Merchant&id=6
 ```json
 {
   "id": 6,
   "version": 0,
   "name": "Joes Groceries",
-  "contactName": "Joe Supplier",
+  "contactName": "Joe Merchant",
   "email": null,
   "phone": null,
   "address": {
@@ -153,7 +153,7 @@ http://localhost:8081/api/v1/persist/find?type=Supplier&id=6
 
 ### Create a product
 
-Create a couple of products passing in the Supplier id
+Create a couple of products passing in the Merchant id
 
 HTTP POST
 
@@ -162,22 +162,22 @@ http://localhost:8081/api/v1/persist/save?type=Product
 {
   "name":"Milk",
   "price":3.0,
-  "supplierId":2
+  "merchantId":2
 }
 ```
 ```json
 {
   "name":"Eggs",
   "price":2.0,
-  "supplierId":2
+  "merchantId":2
 }
 ```
 
-### Find all the products of a particular supplier
+### Find all the products of a particular merchant
 
 HTTP GET
 
-http://localhost:8081/api/v1/persist/findAllByParentId?type=Product&attr=supplierId&value=2
+http://localhost:8081/api/v1/persist/findAllByParentId?type=Product&attr=merchantId&value=2
 
 ```json
 [
@@ -189,7 +189,7 @@ http://localhost:8081/api/v1/persist/findAllByParentId?type=Product&attr=supplie
     "description": null,
     "createdOn": 1586882917254,
     "lastUpdatedOn": 1586882917254,
-    "supplierId": 2
+    "merchantId": 2
   },
   {
     "id": 4,
@@ -199,7 +199,7 @@ http://localhost:8081/api/v1/persist/findAllByParentId?type=Product&attr=supplie
     "description": null,
     "createdOn": 1586882969015,
     "lastUpdatedOn": 1586882969015,
-    "supplierId": 2
+    "merchantId": 2
   }
 ]
 

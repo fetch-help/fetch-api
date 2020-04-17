@@ -6,23 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Purchase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Purchase extends ModelId{
 
     @OneToMany
     private List<PurchaseItem> items = new ArrayList<PurchaseItem>();
 
     private Timestamp createdOn;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
-    }
 
     public List<PurchaseItem> getItems() {
         return items;
