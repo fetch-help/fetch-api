@@ -1,5 +1,6 @@
 package com.fetch.persist.model;
 
+import org.dom4j.rule.Mode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.search.annotations.Field;
@@ -11,11 +12,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Indexed
-public class Supplier {
+public class Merchant extends ModelId {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     @Version
     private long version;
 
@@ -35,15 +33,7 @@ public class Supplier {
 
     private String currency;
 
-    public Supplier() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Merchant() {
     }
 
     public String getName() {

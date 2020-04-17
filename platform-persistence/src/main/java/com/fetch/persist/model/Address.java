@@ -11,11 +11,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Indexed
-public class Address {
+public class Address extends ModelId{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     @Version
     private long version;
 
@@ -30,15 +27,6 @@ public class Address {
     String country;
     @CreationTimestamp
     private Timestamp createdOn;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getLine1() {
         return line1;

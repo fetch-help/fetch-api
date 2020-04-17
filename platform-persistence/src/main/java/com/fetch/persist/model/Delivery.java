@@ -4,10 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-public class Delivery {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Delivery extends ModelId{
 
     @OneToOne
     private Purchase purchase;
@@ -17,14 +14,6 @@ public class Delivery {
 
     private Timestamp deliveryScheduledOn;
     private Timestamp deliveredOn;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Purchase getPurchase() {
         return purchase;

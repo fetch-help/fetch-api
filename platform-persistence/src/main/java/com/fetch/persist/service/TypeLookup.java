@@ -5,14 +5,28 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fetch.persist.model.*;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public final class TypeLookup {
 
-    public static <T> long getId(T t, String type) {
+    static Map<String,Class<?>> classes = new HashMap<>();
+
+    static{
+        List<Class<?>> l = Arrays.asList(Address.class, Customer.class,
+                Delivery.class, Product.class, Purchase.class,
+                PurchaseItem.class, Merchant.class);
+
+        l.stream().forEach(c->{
+            classes.put(c.getSimpleName(), c);
+        });
+    }
+
+    public static <T> long getId(T t) {
+        ModelId c = (ModelId) t;
+        return c.getId();
+        /*
         switch (type) {
-            case "Address":
+            case Address.class:
                 return ((Address) t).getId();
             case "Customer":
                 return ((Customer) t).getId();
@@ -24,30 +38,19 @@ public final class TypeLookup {
                 return ((Purchase) t).getId();
             case "PurchaseItem":
                 return ((PurchaseItem) t).getId();
-            case "Supplier":
-                return ((Supplier) t).getId();
+            case "Merchant":
+                return ((Merchant) t).getId();
         }
         throw new IllegalArgumentException("Invalid type");
+        */
+
     }
 
     public static Class<?> findClass(String type) {
-        switch (type) {
-            case "Address":
-                return Address.class;
-            case "Customer":
-                return Customer.class;
-            case "Delivery":
-                return Delivery.class;
-            case "Product":
-                return Product.class;
-            case "Purchase":
-                return Purchase.class;
-            case "PurchaseItem":
-                return PurchaseItem.class;
-            case "Supplier":
-                return Supplier.class;
+        if(!classes.containsKey(type)) {
+            throw new IllegalArgumentException("Invalid type");
         }
-        throw new IllegalArgumentException("Invalid type");
+        return classes.get(type);
     }
 
     public static <T> T getObject(String json, Class<?> cl) throws JsonProcessingException {

@@ -12,11 +12,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Indexed
-public class Customer {
+public class Customer extends ModelId{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     @Version
     private long version;
     @Field(termVector = TermVector.YES)
@@ -33,14 +30,6 @@ public class Customer {
     private Timestamp lastUpdatedOn;
 
     public Customer() {
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getFirstName() {
