@@ -1,14 +1,15 @@
 package com.fetch.merchant.controller;
 
+import com.fetch.merchant.model.UserResponse;
 import com.fetch.merchant.service.MerchantService;
 import com.fetch.merchant.model.User;
 import com.fetch.merchant.service.JwtClientAdapter;
+import com.fetch.merchant.service.PersistClientAdapter;
+import com.fetch.persist.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.fetch.persist.model.Merchant;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Optional;
@@ -24,15 +25,29 @@ public class MerchantController {
     @Autowired
     JwtClientAdapter jwtClient;
 
+    @Autowired
+    PersistClientAdapter persistClient;
+
     @PostMapping("register")
-    String register(
-            @NotNull @RequestParam("username") final String username,
-            @NotNull @RequestParam("password") final String password) {
+    @ResponseBody
+    UserResponse register(
+            @NotNull @RequestBody final Merchant merchant) {
+
+        String username = merchant.getName();
+        String password = UUID.randomUUID().toString();
         users.save(new User(username,
                 username,
                 password));
-        //TODO persist
-        return UUID.randomUUID().toString();
+
+        Long addressId = persistClient.createAddress(merchant.getAddress());
+        merchant.getAddress().setId(addressId);
+
+        Address address = new Address();
+        address.setId(addressId);
+        merchant.setAddress(address);
+        Long merchantId = persistClient.createMerchant(merchant);
+
+        return new UserResponse(merchantId, username, password);
     }
 
     @PostMapping("login")
