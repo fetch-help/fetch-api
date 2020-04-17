@@ -24,3 +24,8 @@ jobs:
       run: mvn -B package --file platform-persistence/pom.xml
     - name: Build Platform Security with Maven
       run: mvn -B package --file platform-security/pom.xml
+    - name: Build Platform Merchant
+      run: mvn -B package --file platform-merchant/pom.xml
+    - name: Build State Machine
+      run: mvn -B package --file state-machine/pom.xml
+      
