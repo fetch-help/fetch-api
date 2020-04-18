@@ -1,26 +1,24 @@
 package com.fetch.merchant.controller;
 
 import com.fetch.merchant.model.UserResponse;
-import com.fetch.merchant.service.MerchantService;
-import com.fetch.merchant.model.User;
 import com.fetch.merchant.service.JwtClientAdapter;
 import com.fetch.merchant.service.PersistClientAdapter;
 import com.fetch.persist.model.Address;
+import com.fetch.persist.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.fetch.persist.model.Merchant;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("public/api/v1/merchant")
-public class MerchantController {
-
-    @Autowired
-    MerchantService users;
+public class MerchantPublicController {
 
     @Autowired
     JwtClientAdapter jwtClient;
@@ -35,9 +33,10 @@ public class MerchantController {
 
         String username = merchant.getName();
         String password = UUID.randomUUID().toString();
-        users.save(new User(username,
-                username,
-                password));
+        User u = new User();
+        u.setUsername(username);
+        u.setPasswordHash(DigestUtils.md5DigestAsHex(password.getBytes()));
+        persistClient.createUser(u);
 
         Long addressId = persistClient.createAddress(merchant.getAddress());
         merchant.getAddress().setId(addressId);
@@ -55,11 +54,12 @@ public class MerchantController {
             @NotNull @RequestParam("username") final String username,
             @NotNull @RequestParam("password") final String password) {
 
-        Optional<User> ouser = users.findByUsername(username);
-        if (!ouser.isPresent()) {
+        User user = persistClient.findByUsername(username);
+        if (user != null) {
             return "invalid";
         }
-        if (!Arrays.equals(ouser.get().getPassword(), password.toCharArray())) {
+        if (!Objects.equals(user.getPasswordHash(),
+                DigestUtils.md5DigestAsHex(password.getBytes()))) {
             //TODO lock account after number of tries
             return "invalid";
         }

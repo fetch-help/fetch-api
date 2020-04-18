@@ -48,4 +48,9 @@ public class JwtClientAdapter {
         params.put("username", username);
         return client.createToken(params);
     }
+    public Map<String, String>  validateToken(String token) {
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("token", token);
+        return client.validateToken(params);
+    }
 }

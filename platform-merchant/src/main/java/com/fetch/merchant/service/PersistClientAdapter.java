@@ -1,7 +1,9 @@
 package com.fetch.merchant.service;
 
 import com.fetch.persist.model.Address;
+import com.fetch.persist.model.BankAccount;
 import com.fetch.persist.model.Merchant;
+import com.fetch.persist.model.User;
 import feign.Feign;
 import feign.Logger;
 import feign.Request;
@@ -11,6 +13,7 @@ import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -44,6 +47,17 @@ public class PersistClientAdapter {
                 .target(type, url);
     }
 
+    public void createUser(User user){
+        client.createUser(user);
+    }
+
+    public void updateUser(User user){
+        client.updateUser(user);
+    }
+
+    public User findByUsername(String username){
+        return client.findByUsername(username);
+    }
 
     public Long createAddress(Address address) {
         return client.createAddress(address);
@@ -51,5 +65,16 @@ public class PersistClientAdapter {
 
     public Long createMerchant(Merchant merchant) {
         return client.createMerchant(merchant);
+    }
+
+    public Long createMerchantBankAccount(BankAccount bankAccount) {
+        return client.createMerchantBankAccount(bankAccount);
+    }
+    public BankAccount getMerchantBankAccount(long id){
+        return client.getMerchantBankAccount(id);
+    }
+
+    public void updateMerchantBankAccount(BankAccount bankAccount){
+        client.updateMerchantBankAccount(bankAccount);
     }
 }

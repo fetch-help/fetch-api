@@ -1,4 +1,4 @@
-mvn install:install-file -DgroupId=com.fetch -DartifactId=persist -Dversion=0.0.1-SNAPSHOT -Dfile=target/persist-0.0.1-SNAPSHOT-original.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=../platform-repository  -DcreateChecksum=true
+mvn clean package install:install-file -DgroupId=com.fetch -DartifactId=persist -Dversion=0.0.1-SNAPSHOT -Dfile=target/persist-0.0.1-SNAPSHOT-original.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=../platform-repository  -DcreateChecksum=true
 
 ## Persisting the entities
 
