@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 @Indexed
 public class Product extends ModelId{
 
+    @JsonIgnore
     @Version
     private long version;
 
@@ -23,8 +24,10 @@ public class Product extends ModelId{
     private Double price;
 
     private String description;
+    @JsonIgnore
     @CreationTimestamp
     private Timestamp createdOn;
+    @JsonIgnore
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
 

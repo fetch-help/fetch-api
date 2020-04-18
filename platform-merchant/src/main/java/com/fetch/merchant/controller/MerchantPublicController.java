@@ -5,6 +5,8 @@ import com.fetch.merchant.service.JwtClientAdapter;
 import com.fetch.merchant.service.PersistClientAdapter;
 import com.fetch.persist.model.Address;
 import com.fetch.persist.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("public/api/v1/merchant")
 public class MerchantPublicController {
+
+    Logger log = LoggerFactory.getLogger(MerchantPublicController.class);
 
     @Autowired
     JwtClientAdapter jwtClient;
@@ -54,8 +58,11 @@ public class MerchantPublicController {
             @NotNull @RequestParam("username") final String username,
             @NotNull @RequestParam("password") final String password) {
 
+        log.info("Login user {}", username);
+
         User user = persistClient.findByUsername(username);
-        if (user != null) {
+        if (user == null) {
+            log.warn("Login user {} not found !!", username);
             return "invalid";
         }
         if (!Objects.equals(user.getPasswordHash(),

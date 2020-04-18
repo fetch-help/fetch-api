@@ -1,5 +1,6 @@
 package com.fetch.persist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.search.annotations.Field;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 @Indexed
 public class Address extends ModelId{
 
+    @JsonIgnore
     @Version
     private long version;
 
@@ -25,6 +27,7 @@ public class Address extends ModelId{
     String postalCode;
     @Field(termVector = TermVector.YES)
     String country;
+    @JsonIgnore
     @CreationTimestamp
     private Timestamp createdOn;
 

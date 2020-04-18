@@ -10,6 +10,8 @@ import feign.RequestLine;
 import feign.QueryMap;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 public interface PersistClient {
 
     @RequestLine("POST /api/v1/persist/save?type=User")
@@ -20,9 +22,9 @@ public interface PersistClient {
     @Headers("Content-Type: application/json")
     void updateUser(User user);
 
-    @RequestLine("GET /api/v1/persist/findOne?type=User&attr=username")
+    @RequestLine("GET /api/v1/persist/findOne")
     //@Headers("Content-Type: application/json")
-    User findByUsername(@RequestParam(value="value") String username);
+    User findByUsername(@QueryMap Map<String, String> params);
 
     @RequestLine("POST /api/v1/persist/save?type=Address")
     @Headers("Content-Type: application/json")

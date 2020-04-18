@@ -56,7 +56,11 @@ public class PersistClientAdapter {
     }
 
     public User findByUsername(String username){
-        return client.findByUsername(username);
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("type", "User");
+        params.put("attr", "username");
+        params.put("value", username);
+        return client.findByUsername(params);
     }
 
     public Long createAddress(Address address) {

@@ -1,5 +1,6 @@
 package com.fetch.persist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.search.annotations.Field;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Indexed
 public class Customer extends ModelId{
 
+    @JsonIgnore
     @Version
     private long version;
     @Field(termVector = TermVector.YES)
@@ -24,8 +26,10 @@ public class Customer extends ModelId{
     private String phone;
     @OneToOne(cascade = CascadeType.MERGE)
     private Address address;
+    @JsonIgnore
     @CreationTimestamp
     private Timestamp createdOn;
+    @JsonIgnore
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
 

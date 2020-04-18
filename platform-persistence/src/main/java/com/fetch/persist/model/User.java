@@ -1,5 +1,6 @@
 package com.fetch.persist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +11,7 @@ import java.sql.Timestamp;
 @Entity
 public class User extends ModelId{
 
+    @JsonIgnore
     @Version
     private long version;
 
@@ -17,8 +19,10 @@ public class User extends ModelId{
 
     String passwordHash;
 
+    @JsonIgnore
     @CreationTimestamp
     private Timestamp createdOn;
+    @JsonIgnore
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
 
@@ -36,6 +40,14 @@ public class User extends ModelId{
 
     public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public String getUsername() {

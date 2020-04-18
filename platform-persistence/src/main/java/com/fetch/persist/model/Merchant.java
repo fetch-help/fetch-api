@@ -1,5 +1,6 @@
 package com.fetch.persist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dom4j.rule.Mode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 @Indexed
 public class Merchant extends ModelId {
 
+    @JsonIgnore
     @Version
     private long version;
 
@@ -24,8 +26,10 @@ public class Merchant extends ModelId {
     private String phone;
     @OneToOne(cascade = CascadeType.MERGE)
     private Address address;
+    @JsonIgnore
     @CreationTimestamp
     private Timestamp createdOn;
+    @JsonIgnore
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
     @Field(termVector = TermVector.YES)

@@ -30,7 +30,8 @@ public class PersistenceController {
     @ResponseBody
     String findOne(@RequestParam String type, @RequestParam String attr,
                    @RequestParam String value) throws JsonProcessingException {
-        return TypeLookup.writeJson(persistenceService.findOne(type, attr, value));
+        String json = TypeLookup.writeJson(persistenceService.findOne(type, attr, value).get());
+        return json;
     }
     @GetMapping("find")
     @ResponseBody
