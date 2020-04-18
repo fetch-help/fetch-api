@@ -14,7 +14,7 @@ public final class TypeLookup {
     static{
         List<Class<?>> l = Arrays.asList(Address.class, Customer.class,
                 Delivery.class, Product.class, Purchase.class,
-                PurchaseItem.class, Merchant.class);
+                PurchaseItem.class, Merchant.class, BankAccount.class, User.class);
 
         l.stream().forEach(c->{
             classes.put(c.getSimpleName(), c);
@@ -24,26 +24,6 @@ public final class TypeLookup {
     public static <T> long getId(T t) {
         ModelId c = (ModelId) t;
         return c.getId();
-        /*
-        switch (type) {
-            case Address.class:
-                return ((Address) t).getId();
-            case "Customer":
-                return ((Customer) t).getId();
-            case "Delivery":
-                return ((Delivery) t).getId();
-            case "Product":
-                return ((Product) t).getId();
-            case "Purchase":
-                return ((Purchase) t).getId();
-            case "PurchaseItem":
-                return ((PurchaseItem) t).getId();
-            case "Merchant":
-                return ((Merchant) t).getId();
-        }
-        throw new IllegalArgumentException("Invalid type");
-        */
-
     }
 
     public static Class<?> findClass(String type) {

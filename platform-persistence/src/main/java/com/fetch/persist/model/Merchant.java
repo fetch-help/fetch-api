@@ -30,8 +30,10 @@ public class Merchant extends ModelId {
     private Timestamp lastUpdatedOn;
     @Field(termVector = TermVector.YES)
     private String locale;
-
     private String currency;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private BankAccount bankAccount;
 
     public Merchant() {
     }

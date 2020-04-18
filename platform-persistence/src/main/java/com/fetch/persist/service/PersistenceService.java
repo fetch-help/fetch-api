@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class PersistenceService {
@@ -16,6 +17,11 @@ public class PersistenceService {
     @Transactional
     public <T> Collection<T> findAll(String type) throws JsonProcessingException {
         return repo.findAll(type);
+    }
+
+    @Transactional
+    public <T> Optional<T> findOne(String type, String attr, String value) throws JsonProcessingException {
+        return repo.findOne(type, attr, value);
     }
 
     @Transactional

@@ -26,6 +26,12 @@ public class PersistenceController {
         return TypeLookup.writeJsonList(persistenceService.findAll(type, attr, value));
     }
 
+    @GetMapping("findOne")
+    @ResponseBody
+    String findOne(@RequestParam String type, @RequestParam String attr,
+                   @RequestParam String value) throws JsonProcessingException {
+        return TypeLookup.writeJson(persistenceService.findOne(type, attr, value));
+    }
     @GetMapping("find")
     @ResponseBody
     String find(@RequestParam String id, @RequestParam String type) throws JsonProcessingException {
