@@ -1,5 +1,8 @@
 package com.fetch.persist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,6 +14,8 @@ public class Purchase extends ModelId{
     @OneToMany
     private List<PurchaseItem> items = new ArrayList<PurchaseItem>();
 
+    @JsonIgnore
+    @CreationTimestamp
     private Timestamp createdOn;
 
     public List<PurchaseItem> getItems() {
