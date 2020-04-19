@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -30,17 +27,6 @@ public class BankAccount extends ModelId{
     @JsonIgnore
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
-
-    @OneToOne(mappedBy = "bankAccount")
-    private Merchant merchant;
-
-    public Merchant getMerchant() {
-        return merchant;
-    }
-
-    public void setMerchant(Merchant merchant) {
-        this.merchant = merchant;
-    }
 
     public String getAccountHolder() {
         return accountHolder;

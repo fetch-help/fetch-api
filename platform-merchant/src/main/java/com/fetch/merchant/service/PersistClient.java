@@ -50,8 +50,8 @@ public interface PersistClient {
     //@Headers("Content-Type: application/json")
     BankAccount getMerchantBankAccount(@QueryMap Map<String, Long> params);
 
-    @RequestLine("POST /api/v1/persist/update?type=BankAccount")
+    @RequestLine("PUT /api/v1/persist/update?type=Merchant")
     @Headers("Content-Type: application/json")
-    void updateMerchantBankAccount(@QueryMap Map<String, Long> params, BankAccount bankAccount);
+    void updateMerchant(@QueryMap Map<String, Long> params, Merchant merchant);
 
 }

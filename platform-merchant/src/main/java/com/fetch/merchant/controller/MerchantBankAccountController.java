@@ -17,53 +17,40 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("api/v1/merchant")
-public class MerchantBankAccountController {
+public class MerchantBankAccountController extends MerchantAbstractController{
 
     Logger log = LoggerFactory.getLogger(MerchantBankAccountController.class);
 
     @Autowired
     PersistClientAdapter persistClient;
 
-    /**
-     * Check if the user matches the merchant whose account is being updated
-     * @param merchantId
-     * @param authentication
-     */
-    private void doChecks(final Long merchantId, Authentication authentication){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User ou = persistClient.findByUsername(userDetails.getUsername());
-        if(ou == null){
-            throw new IllegalArgumentException();
-        }
-        Merchant merchant = persistClient.findMerchantByName(userDetails.getUsername());
-        if(!merchant.getId().equals(merchantId)){
-            throw new IllegalArgumentException();
-        }
-    }
 
     @PostMapping("/bank-account")
     @ResponseBody
     Long registerBankAccount(
+            @NotNull @RequestParam("merchantId") final Long merchantId,
             @NotNull @RequestBody final BankAccount bankAccount, Authentication authentication) {
-        if(bankAccount.getMerchant()==null || bankAccount.getMerchant().getId()==null){
-            throw new IllegalArgumentException();
-        }
+        Merchant merchant = persistClient.getMerchant(merchantId);
+        doChecks(merchantId, authentication);
 
-        doChecks(bankAccount.getMerchant().getId(), authentication);
+        Long bankAccountId = persistClient.createMerchantBankAccount(bankAccount);
 
-        return persistClient.createMerchantBankAccount(bankAccount);
+        bankAccount.setId(bankAccountId);
+        merchant.setBankAccount(bankAccount);
+
+        persistClient.updateMerchant(merchant);
+
+        return bankAccountId;
     }
 
     @GetMapping("/bank-account")
     @ResponseBody
     BankAccount getBankAccount(
             @NotNull @RequestParam("merchantId") final Long merchantId, Authentication authentication) {
-        if(merchantId==null){
-            throw new IllegalArgumentException();
-        }
 
         Merchant merchant = persistClient.getMerchant(merchantId);
         if(merchant==null || merchant.getBankAccount()==null){
+            log.warn("Merchant or Bank account not found for {} ", merchantId);
             throw new IllegalArgumentException();
         }
         doChecks(merchant.getId(), authentication);
@@ -74,19 +61,23 @@ public class MerchantBankAccountController {
     @PutMapping("/bank-account")
     @ResponseBody
     void updateBankAccount(
+            @NotNull @RequestParam("merchantId") final Long merchantId,
             @NotNull @RequestBody final BankAccount bankAccount, Authentication authentication) {
-        if(bankAccount.getId()==null || bankAccount.getMerchant().getId()==null){
+
+        doChecks(merchantId, authentication);
+        Merchant merchant = persistClient.getMerchant(merchantId);
+        if(merchant==null || merchant.getBankAccount()==null){
+            log.warn("Merchant or Bank account not found for {} ", merchantId);
             throw new IllegalArgumentException();
         }
+        if(!merchant.getBankAccount().getId().equals(bankAccount.getId())){
+            log.warn("Merchants Bank account Id {} does not match passed in bank account idr {} ",
+                    merchant.getBankAccount().getId(), bankAccount.getId());
+            throw new IllegalArgumentException();
+        }
+        merchant.setBankAccount(bankAccount);
 
-        doChecks(bankAccount.getMerchant().getId(), authentication);
-
-        persistClient.updateMerchantBankAccount(bankAccount);
+        persistClient.updateMerchant(merchant);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<?> handleIllegal(IllegalArgumentException exc) {
-        log.error("Error handing request",exc);
-        return ResponseEntity.badRequest().build();
-    }
 }

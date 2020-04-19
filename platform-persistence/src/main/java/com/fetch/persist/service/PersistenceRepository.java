@@ -37,6 +37,7 @@ public class PersistenceRepository {
 
     public <T> T find(Class<T> clazz, Long id) {
         return em.find(clazz, id);
+
     }
 
     public <T> T save(Class<T> clazz, T t) {
@@ -48,4 +49,5 @@ public class PersistenceRepository {
     public <T> void update(Class<T> clazz, T t) {
         em.merge(t);em.flush();
     }
+
 }

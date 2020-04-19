@@ -96,9 +96,9 @@ public class PersistClientAdapter {
         params.put("id", id);
         return client.getMerchant(params);
     }
-    public void updateMerchantBankAccount(BankAccount bankAccount){
+    public void updateMerchant(Merchant merchant){
         Map<String, Long> params = new LinkedHashMap<>();
-        params.put("id", bankAccount.getId());
-        client.updateMerchantBankAccount(params, bankAccount);
+        params.put("id", merchant.getId());
+        client.updateMerchant(params, merchant);
     }
 }
