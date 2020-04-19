@@ -41,10 +41,11 @@ public class PersistenceRepository {
 
     public <T> T save(Class<T> clazz, T t) {
         em.persist(t);
+        em.flush();
         return t;
     }
 
     public <T> void update(Class<T> clazz, T t) {
-        em.merge(t);
+        em.merge(t);em.flush();
     }
 }

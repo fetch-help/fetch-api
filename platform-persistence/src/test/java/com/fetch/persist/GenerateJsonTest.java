@@ -1,10 +1,7 @@
 package com.fetch.persist;
 
 
-import com.fetch.persist.model.Address;
-import com.fetch.persist.model.Customer;
-import com.fetch.persist.model.Product;
-import com.fetch.persist.model.Merchant;
+import com.fetch.persist.model.*;
 import com.fetch.persist.service.TypeLookup;
 import org.junit.Test;
 
@@ -41,6 +38,16 @@ public class GenerateJsonTest {
         c.setMerchantId(3L);
 
         System.out.println(TypeLookup.writeJson(c));
+    }
+
+    @Test
+    public void generateBankAccount()throws Exception{
+        BankAccount c = new BankAccount();
+        c.setAccountHolder("holder");
+        String json = TypeLookup.writeJson(c);
+        System.out.println(json);
+        c = TypeLookup.getObject(json, BankAccount.class);
+        System.out.println(c);
     }
 
 

@@ -8,6 +8,7 @@ import com.fetch.persist.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,5 +72,11 @@ public class MerchantPublicController {
             return "invalid";
         }
         return jwtClient.createToken(username);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleIllegal(Exception exc) {
+        log.error("Error handing request",exc);
+        return ResponseEntity.badRequest().build();
     }
 }

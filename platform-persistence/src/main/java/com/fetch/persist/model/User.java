@@ -4,17 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import java.sql.Timestamp;
 
 @Entity
 public class User extends ModelId{
 
-    @JsonIgnore
     @Version
     private long version;
 
+    @Column(unique=true)
     String username;
 
     String passwordHash;

@@ -15,11 +15,11 @@ import java.sql.Timestamp;
 @Indexed
 public class Merchant extends ModelId {
 
-    @JsonIgnore
     @Version
     private long version;
 
     @Field(termVector = TermVector.YES)
+    @Column(unique=true)
     private String name;
     private String contactName;
     private String email;
@@ -36,7 +36,8 @@ public class Merchant extends ModelId {
     private String locale;
     private String currency;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bank_account_id", referencedColumnName = "id")
     private BankAccount bankAccount;
 
     public Merchant() {
@@ -120,5 +121,13 @@ public class Merchant extends ModelId {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 }

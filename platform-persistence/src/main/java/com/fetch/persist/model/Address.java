@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 @Indexed
 public class Address extends ModelId{
 
-    @JsonIgnore
     @Version
     private long version;
 

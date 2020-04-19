@@ -15,13 +15,13 @@ import java.time.LocalDateTime;
 @Indexed
 public class Customer extends ModelId{
 
-    @JsonIgnore
     @Version
     private long version;
     @Field(termVector = TermVector.YES)
     private String firstName;
     @Field(termVector = TermVector.YES)
     private String lastName;
+    @Column(unique=true)
     private String email;
     private String phone;
     @OneToOne(cascade = CascadeType.MERGE)
