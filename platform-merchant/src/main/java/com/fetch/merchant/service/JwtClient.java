@@ -12,7 +12,7 @@ public interface JwtClient {
     //@Headers("Content-Type: application/json")
     String createToken(@QueryMap Map<String, String> params);
 
-    @RequestLine("POST /api/token/validate")
+    @RequestLine("POST /api/v1/token/validate")
         //@Headers("Content-Type: application/json")
     Map<String, String> validateToken(@QueryMap Map<String, String> params);
 }

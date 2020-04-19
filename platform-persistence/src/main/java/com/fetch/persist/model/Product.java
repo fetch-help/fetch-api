@@ -19,6 +19,7 @@ public class Product extends ModelId{
     private long version;
 
     @Field(termVector = TermVector.YES)
+    @Column(unique=true)
     private String name;
 
     private Double price;

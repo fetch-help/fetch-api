@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 @Entity
 public class BankAccount extends ModelId{
 
-    @JsonIgnore
     @Version
     private long version;
 
@@ -32,7 +31,7 @@ public class BankAccount extends ModelId{
     @UpdateTimestamp
     private Timestamp lastUpdatedOn;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "bankAccount")
     private Merchant merchant;
 
     public Merchant getMerchant() {
@@ -113,5 +112,13 @@ public class BankAccount extends ModelId{
 
     public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

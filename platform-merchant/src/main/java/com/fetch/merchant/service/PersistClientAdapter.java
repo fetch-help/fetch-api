@@ -6,6 +6,7 @@ import com.fetch.persist.model.Merchant;
 import com.fetch.persist.model.User;
 import feign.Feign;
 import feign.Logger;
+import feign.QueryMap;
 import feign.Request;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
@@ -52,15 +53,25 @@ public class PersistClientAdapter {
     }
 
     public void updateUser(User user){
-        client.updateUser(user);
+        Map<String, Long> params = new LinkedHashMap<>();
+        params.put("id", user.getId());
+        client.updateUser(params, user);
     }
 
     public User findByUsername(String username){
         Map<String, String> params = new LinkedHashMap<>();
-        params.put("type", "User");
+        params.put("type", User.class.getSimpleName());
         params.put("attr", "username");
         params.put("value", username);
         return client.findByUsername(params);
+    }
+
+    public Merchant findMerchantByName(String name){
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("type", Merchant.class.getSimpleName());
+        params.put("attr", "name");
+        params.put("value", name);
+        return client.findMerchantByName(params);
     }
 
     public Long createAddress(Address address) {
@@ -75,10 +86,19 @@ public class PersistClientAdapter {
         return client.createMerchantBankAccount(bankAccount);
     }
     public BankAccount getMerchantBankAccount(long id){
-        return client.getMerchantBankAccount(id);
+        Map<String, Long> params = new LinkedHashMap<>();
+        params.put("id", id);
+        return client.getMerchantBankAccount(params);
     }
 
+    public Merchant getMerchant(Long id){
+        Map<String, Long> params = new LinkedHashMap<>();
+        params.put("id", id);
+        return client.getMerchant(params);
+    }
     public void updateMerchantBankAccount(BankAccount bankAccount){
-        client.updateMerchantBankAccount(bankAccount);
+        Map<String, Long> params = new LinkedHashMap<>();
+        params.put("id", bankAccount.getId());
+        client.updateMerchantBankAccount(params, bankAccount);
     }
 }

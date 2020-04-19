@@ -20,7 +20,7 @@ public interface PersistClient {
 
     @RequestLine("PUT /api/v1/persist/update?type=User")
     @Headers("Content-Type: application/json")
-    void updateUser(User user);
+    void updateUser(@QueryMap Map<String, Long> params, User user);
 
     @RequestLine("GET /api/v1/persist/findOne")
     //@Headers("Content-Type: application/json")
@@ -34,16 +34,24 @@ public interface PersistClient {
         @Headers("Content-Type: application/json")
     Long createMerchant(Merchant merchant);
 
+    @RequestLine("GET /api/v1/persist/find?type=Merchant")
+    //@Headers("Content-Type: application/json")
+    Merchant getMerchant(@QueryMap Map<String, Long> params);
+
+    @RequestLine("GET /api/v1/persist/findOne")
+        //@Headers("Content-Type: application/json")
+    Merchant findMerchantByName(@QueryMap Map<String, String> params);
+
     @RequestLine("POST /api/v1/persist/save?type=BankAccount")
     @Headers("Content-Type: application/json")
     Long createMerchantBankAccount(BankAccount bankAccount);
 
     @RequestLine("GET /api/v1/persist/find?type=BankAccount")
     //@Headers("Content-Type: application/json")
-    BankAccount getMerchantBankAccount(long id);
+    BankAccount getMerchantBankAccount(@QueryMap Map<String, Long> params);
 
     @RequestLine("POST /api/v1/persist/update?type=BankAccount")
     @Headers("Content-Type: application/json")
-    void updateMerchantBankAccount(BankAccount bankAccount);
+    void updateMerchantBankAccount(@QueryMap Map<String, Long> params, BankAccount bankAccount);
 
 }
