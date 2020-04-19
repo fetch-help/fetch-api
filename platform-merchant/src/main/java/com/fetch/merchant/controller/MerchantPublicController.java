@@ -43,12 +43,6 @@ public class MerchantPublicController {
         u.setPasswordHash(DigestUtils.md5DigestAsHex(password.getBytes()));
         persistClient.createUser(u);
 
-        Long addressId = persistClient.createAddress(merchant.getAddress());
-        merchant.getAddress().setId(addressId);
-
-        Address address = new Address();
-        address.setId(addressId);
-        merchant.setAddress(address);
         Long merchantId = persistClient.createMerchant(merchant);
 
         return new UserResponse(merchantId, username, password);
@@ -68,6 +62,9 @@ public class MerchantPublicController {
         }
         if (!Objects.equals(user.getPasswordHash(),
                 DigestUtils.md5DigestAsHex(password.getBytes()))) {
+            log.warn("Login user {} passwords dont match {} {} !!", username,
+                    user.getPasswordHash(),
+                    password);
             //TODO lock account after number of tries
             return "invalid";
         }

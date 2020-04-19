@@ -24,7 +24,7 @@ public class Merchant extends ModelId {
     private String contactName;
     private String email;
     private String phone;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
     @JsonIgnore
     @CreationTimestamp
@@ -36,8 +36,7 @@ public class Merchant extends ModelId {
     private String locale;
     private String currency;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "bank_account_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private BankAccount bankAccount;
 
     public Merchant() {
