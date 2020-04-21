@@ -7,9 +7,9 @@ mvn clean package install:install-file -DgroupId=com.fetch -DartifactId=persist 
 Create an address and return the id, use the id for creating a Customer
 
 HTTP POST
+http://localhost:8081/api/v1/persist/save?type=Address
 
 ```json
-http://localhost:8081/api/v1/persist/save?type=Address
 {
       "line1":"Address line 1",
 	  "line2":"Address line 2",

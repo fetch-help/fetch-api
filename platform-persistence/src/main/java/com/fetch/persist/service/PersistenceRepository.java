@@ -50,4 +50,8 @@ public class PersistenceRepository {
         em.merge(t);em.flush();
     }
 
+    public <T> void delete(T t) {
+        em.remove(t);
+    }
+
 }

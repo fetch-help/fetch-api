@@ -6,6 +6,8 @@ import com.fetch.persist.service.TypeLookup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/persist")
 public class PersistenceController {
@@ -45,10 +47,30 @@ public class PersistenceController {
         return persistenceService.save(type, json);
     }
 
+    @PostMapping("saveList")
+    @ResponseBody
+    void saveList(@RequestBody String json, @RequestParam String type) throws JsonProcessingException {
+        persistenceService.saveList(type, json);
+    }
+
     @PutMapping("update")
     void update(@RequestBody String json, @RequestParam String id,
                 @RequestParam String type)
             throws JsonProcessingException {
         persistenceService.update(id, type, json);
+    }
+
+    @DeleteMapping("delete")
+    void delete(@RequestParam Long id,
+                @RequestParam String type)
+            throws JsonProcessingException {
+        persistenceService.delete(id, type);
+    }
+
+    @DeleteMapping("deleteAll")
+    void delete(@RequestBody List<Long> ids,
+                @RequestParam String type)
+            throws JsonProcessingException {
+        persistenceService.deleteAll(ids, type);
     }
 }

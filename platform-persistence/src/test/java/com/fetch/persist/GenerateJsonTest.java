@@ -6,6 +6,7 @@ import com.fetch.persist.service.TypeLookup;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class GenerateJsonTest {
 
@@ -97,4 +98,11 @@ public class GenerateJsonTest {
         System.out.println(TypeLookup.writeJson(Arrays.asList(c1, c2)));
     }
 
+    @Test
+    public void testReadList()throws Exception{
+        String json = "[{\"name\": \"Sugar\", \"price\": 5.0}, {\"name\": \"Milk\", \"price\": 3.5}]";
+
+        List<Product> l = TypeLookup.readJsonList(json, Product.class);
+        System.out.println(l);
+    }
 }

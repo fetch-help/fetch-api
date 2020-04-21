@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,11 +44,31 @@ public class PersistenceService {
         return TypeLookup.getId(ob);
     }
     @Transactional
+    public <T> void saveList(String type, String jsonList) throws JsonProcessingException {
+        Class<T> c = (Class<T>) TypeLookup.findClass(type);
+        List<T> obs = TypeLookup.readJsonList(jsonList, c);
+        obs.forEach(o->repo.save(c, o));
+    }
+    @Transactional
     public <T> void update(String id, String type, String json) throws JsonProcessingException {
         Class<T> c = (Class<T>) TypeLookup.findClass(type);
         T ob = TypeLookup.getObject(json, c);
         repo.update(c, ob);
     }
 
+    @Transactional
+    public <T> void delete(Long id, String type) throws JsonProcessingException {
+        Class<T> c = (Class<T>) TypeLookup.findClass(type);
+        T t = repo.find(c, id);
+        repo.delete(t);
+    }
 
+    @Transactional
+    public <T> void deleteAll(List<Long> ids, String type) throws JsonProcessingException {
+        Class<T> c = (Class<T>) TypeLookup.findClass(type);
+        ids.forEach(id-> {
+            T t = repo.find(c, id);
+            repo.delete(t);
+        });
+    }
 }

@@ -1,15 +1,13 @@
 package com.fetch.merchant.service;
 
 
-import com.fetch.persist.model.Address;
-import com.fetch.persist.model.Merchant;
-import com.fetch.persist.model.BankAccount;
-import com.fetch.persist.model.User;
+import com.fetch.persist.model.*;
 import feign.Headers;
 import feign.RequestLine;
 import feign.QueryMap;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 public interface PersistClient {
@@ -53,5 +51,29 @@ public interface PersistClient {
     @RequestLine("PUT /api/v1/persist/update?type=Merchant")
     @Headers("Content-Type: application/json")
     void updateMerchant(@QueryMap Map<String, Long> params, Merchant merchant);
+
+    @RequestLine("POST /api/v1/persist/save?type=Product")
+    @Headers("Content-Type: application/json")
+    Long createProduct(@QueryMap Map<String, String> params, Product product);
+
+    @RequestLine("POST /api/v1/persist/saveList?type=Product")
+    @Headers("Content-Type: application/json")
+    void createProducts(@QueryMap Map<String, String> params, List<Product> products);
+
+    @RequestLine("GET /api/v1/persist/findAllByParentId?type=Product")
+    @Headers("Content-Type: application/json")
+    List<Product> getProducts(@QueryMap Map<String, Object> params);
+
+    @RequestLine("DELETE /api/v1/persist/deleteAll?type=Product")
+    @Headers("Content-Type: application/json")
+    void deleteAllProducts(@QueryMap Map<String, String> params, List<Long> productIds);
+
+    @RequestLine("DELETE /api/v1/persist/delete?type=Product")
+    @Headers("Content-Type: application/json")
+    void deleteProduct(@QueryMap Map<String, Object> params);
+
+    @RequestLine("GET /api/v1/persist/find?type=Product")
+        //@Headers("Content-Type: application/json")
+    Product getProduct(@QueryMap Map<String, Long> params);
 
 }
