@@ -1,9 +1,6 @@
 package com.fetch.merchant.service;
 
-import com.fetch.persist.model.Address;
-import com.fetch.persist.model.BankAccount;
-import com.fetch.persist.model.Merchant;
-import com.fetch.persist.model.User;
+import com.fetch.persist.model.*;
 import feign.Feign;
 import feign.Logger;
 import feign.QueryMap;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -100,5 +98,43 @@ public class PersistClientAdapter {
         Map<String, Long> params = new LinkedHashMap<>();
         params.put("id", merchant.getId());
         client.updateMerchant(params, merchant);
+    }
+
+    public Long createProduct(Product product){
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("type", Product.class.getSimpleName());
+        return client.createProduct(params, product);
+    }
+
+    public void createProducts(List<Product> products){
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("type", Product.class.getSimpleName());
+        client.createProducts(params, products);
+    }
+
+    public List<Product> getProducts(Long merchantId){
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("attr", "merchantId");
+        params.put("value", merchantId);
+        return client.getProducts(params);
+    }
+
+    public void deleteAllProducts(List<Long> productIds){
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("type", Product.class.getSimpleName());
+        client.deleteAllProducts(params, productIds);
+    }
+
+    public void deleteProduct(Long productId){
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("type", Product.class.getSimpleName());
+        params.put("id", productId);
+        client.deleteProduct(params);
+    }
+
+    public Product getProduct(Long id){
+        Map<String, Long> params = new LinkedHashMap<>();
+        params.put("id", id);
+        return client.getProduct(params);
     }
 }

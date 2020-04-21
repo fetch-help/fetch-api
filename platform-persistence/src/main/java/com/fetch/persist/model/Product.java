@@ -105,4 +105,17 @@ public class Product extends ModelId{
         this.merchant = merchant;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "version=" + version +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", createdOn=" + createdOn +
+                ", lastUpdatedOn=" + lastUpdatedOn +
+                ", merchant=" + merchant +
+                ", merchantId=" + merchantId +
+                '}';
+    }
 }

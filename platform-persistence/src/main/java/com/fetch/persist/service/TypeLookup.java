@@ -47,4 +47,9 @@ public final class TypeLookup {
         ObjectMapper om = new ObjectMapper();
         return om.writerFor(new TypeReference<List<Object>>(){}).writeValueAsString(ob);
     }
+
+    public static <T> List<T> readJsonList(String jsonList, Class<T> c) throws JsonProcessingException {
+        ObjectMapper om = new ObjectMapper();
+        return om.readValue(jsonList, om.getTypeFactory().constructCollectionType(List.class, c));
+    }
 }
