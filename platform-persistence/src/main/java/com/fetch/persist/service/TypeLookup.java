@@ -14,7 +14,8 @@ public final class TypeLookup {
     static{
         List<Class<?>> l = Arrays.asList(Address.class, Customer.class,
                 Delivery.class, Product.class, Purchase.class,
-                PurchaseItem.class, Merchant.class, BankAccount.class, User.class);
+                PurchaseItem.class, Merchant.class, BankAccount.class, User.class,
+                ProductCatalog.class);
 
         l.stream().forEach(c->{
             classes.put(c.getSimpleName(), c);

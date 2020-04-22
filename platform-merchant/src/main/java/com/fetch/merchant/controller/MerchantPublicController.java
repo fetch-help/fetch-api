@@ -4,6 +4,7 @@ import com.fetch.merchant.model.UserResponse;
 import com.fetch.merchant.service.JwtClientAdapter;
 import com.fetch.merchant.service.PersistClientAdapter;
 import com.fetch.persist.model.Address;
+import com.fetch.persist.model.ProductCatalog;
 import com.fetch.persist.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.fetch.persist.model.Merchant;
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("public/api/v1/merchant")
@@ -69,6 +67,11 @@ public class MerchantPublicController {
             return "invalid";
         }
         return jwtClient.createToken(username);
+    }
+
+    @GetMapping("catalog")
+    List<ProductCatalog> getCatalog(){
+        return persistClient.getProductCatalog();
     }
 
     @ExceptionHandler(Exception.class)

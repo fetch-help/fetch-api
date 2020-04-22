@@ -40,7 +40,7 @@ class ProductDb:
 
     def dumpproductdetail(self):
         self.load()
-        with open('product_detail.csv', mode='wb') as f:
+        with open('../platform-admin/product_detail.csv', mode='wb') as f:
             writer = csv.writer(f, delimiter="|")
             for product in self.getproductnames():
                 writer.writerow([product, self.getaisle(product), self.getdepartment(product)])

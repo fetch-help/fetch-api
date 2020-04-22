@@ -137,4 +137,8 @@ public class PersistClientAdapter {
         params.put("id", id);
         return client.getProduct(params);
     }
+
+    public List<ProductCatalog> getProductCatalog(){
+        return client.getProductCatalog();
+    }
 }
