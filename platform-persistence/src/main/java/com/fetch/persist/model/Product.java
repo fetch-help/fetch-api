@@ -22,6 +22,8 @@ public class Product extends ModelId{
     @Column(unique=true)
     private String name;
 
+    private String unit;
+
     private Double price;
 
     private String description;
@@ -130,17 +132,27 @@ public class Product extends ModelId{
         this.productCatalogId = productCatalogId;
     }
 
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "version=" + version +
                 ", name='" + name + '\'' +
+                ", unit='" + unit + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", createdOn=" + createdOn +
                 ", lastUpdatedOn=" + lastUpdatedOn +
                 ", merchant=" + merchant +
                 ", merchantId=" + merchantId +
+                ", productCatalog=" + productCatalog +
                 ", productCatalogId=" + productCatalogId +
                 '}';
     }
