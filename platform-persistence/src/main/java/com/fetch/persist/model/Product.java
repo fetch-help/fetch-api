@@ -40,6 +40,15 @@ public class Product extends ModelId{
     @Column(name = "merchant_id")
     private Long merchantId;
 
+    @JsonIgnore
+    @JoinColumn(name = "product_catalog_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = ProductCatalog.class, fetch = FetchType.LAZY)
+    private ProductCatalog productCatalog;
+
+    @Column(name = "product_catalog_id")
+    private Long productCatalogId;
+
+
     public String getName() {
         return name;
     }
@@ -105,6 +114,22 @@ public class Product extends ModelId{
         this.merchant = merchant;
     }
 
+    public ProductCatalog getProductCatalog() {
+        return productCatalog;
+    }
+
+    public void setProductCatalog(ProductCatalog productCatalog) {
+        this.productCatalog = productCatalog;
+    }
+
+    public Long getProductCatalogId() {
+        return productCatalogId;
+    }
+
+    public void setProductCatalogId(Long productCatalogId) {
+        this.productCatalogId = productCatalogId;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -116,6 +141,7 @@ public class Product extends ModelId{
                 ", lastUpdatedOn=" + lastUpdatedOn +
                 ", merchant=" + merchant +
                 ", merchantId=" + merchantId +
+                ", productCatalogId=" + productCatalogId +
                 '}';
     }
 }

@@ -76,4 +76,8 @@ public interface PersistClient {
         //@Headers("Content-Type: application/json")
     Product getProduct(@QueryMap Map<String, Long> params);
 
+    @RequestLine("GET /api/v1/persist/findAll?type=ProductCatalog")
+        //@Headers("Content-Type: application/json")
+    List<ProductCatalog> getProductCatalog();
+
 }
