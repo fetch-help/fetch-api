@@ -9,6 +9,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -25,6 +26,7 @@ public class Merchant extends ModelId {
     private String email;
     private String phone;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @NotNull
     private Address address;
     @JsonIgnore
     @CreationTimestamp

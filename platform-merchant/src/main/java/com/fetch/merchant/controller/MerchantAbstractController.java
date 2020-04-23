@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Objects;
+
 public class MerchantAbstractController {
 
     Logger log = LoggerFactory.getLogger(MerchantAbstractController.class);
@@ -18,6 +20,12 @@ public class MerchantAbstractController {
     @Autowired
     PersistClientAdapter persistClient;
 
+    protected void doChecks(final String callerIdentifier, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        if (!Objects.equals(callerIdentifier, userDetails.getUsername())) {
+            throw new IllegalArgumentException();
+        }
+    }
     /**
      * Check if the user matches the merchant whose account is being updated
      * @param merchantId

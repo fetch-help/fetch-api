@@ -9,17 +9,21 @@ import com.fetch.persist.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.fetch.persist.model.Merchant;
 import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("public/api/v1/merchant")
-public class MerchantPublicController {
+@RequestMapping("api/v1/merchant")
+public class MerchantPublicController extends MerchantAbstractController {
 
     Logger log = LoggerFactory.getLogger(MerchantPublicController.class);
 
@@ -31,8 +35,10 @@ public class MerchantPublicController {
 
     @PostMapping("register")
     @ResponseBody
-    UserResponse register(
+    UserResponse register(@RequestParam String callerId, Authentication authentication,
             @NotNull @RequestBody final Merchant merchant) {
+
+        doChecks(callerId, authentication);
 
         String username = merchant.getName();
         String password = UUID.randomUUID().toString();
@@ -48,8 +54,11 @@ public class MerchantPublicController {
 
     @PostMapping("login")
     String login(
+            @RequestParam String callerId, Authentication authentication,
             @NotNull @RequestParam("username") final String username,
             @NotNull @RequestParam("password") final String password) {
+
+        doChecks(callerId, authentication);
 
         log.info("Login user {}", username);
 
@@ -67,11 +76,6 @@ public class MerchantPublicController {
             return "invalid";
         }
         return jwtClient.createToken(username);
-    }
-
-    @GetMapping("catalog")
-    List<ProductCatalog> getCatalog(){
-        return persistClient.getProductCatalog();
     }
 
     @ExceptionHandler(Exception.class)

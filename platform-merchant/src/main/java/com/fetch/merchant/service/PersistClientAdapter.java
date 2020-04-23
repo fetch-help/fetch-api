@@ -141,4 +141,10 @@ public class PersistClientAdapter {
     public List<ProductCatalog> getProductCatalog(){
         return client.getProductCatalog();
     }
+
+    public List<ProductCatalog> getProductCatalogWithProductsInStock(String postalCode){
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("postCode", postalCode);
+        return client.getProductCatalogWithProductsInStock(params);
+    }
 }

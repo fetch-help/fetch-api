@@ -8,6 +8,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -27,6 +28,9 @@ public class Product extends ModelId{
     private Double price;
 
     private String description;
+
+    private boolean inStock;
+
     @JsonIgnore
     @CreationTimestamp
     private Timestamp createdOn;
@@ -40,6 +44,7 @@ public class Product extends ModelId{
     private Merchant merchant;
 
     @Column(name = "merchant_id")
+    @NotNull
     private Long merchantId;
 
     @JsonIgnore
@@ -48,6 +53,7 @@ public class Product extends ModelId{
     private ProductCatalog productCatalog;
 
     @Column(name = "product_catalog_id")
+    @NotNull
     private Long productCatalogId;
 
 
@@ -140,6 +146,14 @@ public class Product extends ModelId{
         this.unit = unit;
     }
 
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -148,11 +162,10 @@ public class Product extends ModelId{
                 ", unit='" + unit + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", inStock=" + inStock +
                 ", createdOn=" + createdOn +
                 ", lastUpdatedOn=" + lastUpdatedOn +
-                ", merchant=" + merchant +
                 ", merchantId=" + merchantId +
-                ", productCatalog=" + productCatalog +
                 ", productCatalogId=" + productCatalogId +
                 '}';
     }
