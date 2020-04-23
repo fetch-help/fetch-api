@@ -4,6 +4,13 @@ import pandas as pd
 import requests
 import json
 
+# Create token
+# Create Merchant
+# Login Merchant
+# Add Bank Account
+# Find Merchant by Id
+# Change password to testpass
+
 callerId = "192.0.0.1"
 
 url = 'http://localhost:8089/api/v1/token/create'
@@ -71,3 +78,9 @@ print r.status_code
 response = r.json()
 print response
 print(json.dumps(response, indent=4, sort_keys=True))
+
+url = 'http://localhost:8084/api/v1/merchant/change-password'
+payload = {'username': 'Joes Groceries', 'password': 'testpass'}
+headers = {'Authorization': 'Bearer ' + token, 'content-type': 'application/json'}
+r = requests.put(url, data=json.dumps(payload), headers=headers)
+print r.status_code
