@@ -3,6 +3,8 @@ import csv
 import requests
 import json
 
+# Upload Product Catalog
+
 df = pd.read_csv('product_detail.csv', delimiter='|')
 print df
 # select only categories
