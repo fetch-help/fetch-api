@@ -8,6 +8,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -17,14 +18,17 @@ public class Address extends ModelId{
     @Version
     private long version;
 
+    @NotNull
     String line1;
     String line2;
     String line3;
 
 
     @Field(termVector = TermVector.YES)
+    @NotNull
     String postalCode;
     @Field(termVector = TermVector.YES)
+    @NotNull
     String country;
     @JsonIgnore
     @CreationTimestamp

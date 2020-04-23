@@ -80,4 +80,10 @@ public interface PersistClient {
         //@Headers("Content-Type: application/json")
     List<ProductCatalog> getProductCatalog();
 
+    @RequestLine("GET /api/v1/persist/product/findCatalogWithProductsInStock")
+        //@Headers("Content-Type: application/json")
+    List<ProductCatalog> getProductCatalogWithProductsInStock(@QueryMap Map<String, String> params);
+
+
+
 }
