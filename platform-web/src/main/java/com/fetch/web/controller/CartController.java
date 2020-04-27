@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
+import java.util.UUID;
 
 //TODO https://spring.io/guides/gs/rest-service-cors/
 @RestController
@@ -28,7 +29,7 @@ public class CartController {
     @CrossOrigin(origins = "http://localhost:9001")
     @GetMapping("/ip")
     public String ip(HttpServletRequest request) {
-        return request.getRemoteAddr();
+        return UUID.randomUUID().toString();
     }
 
     @CrossOrigin(origins = "http://localhost:9001")
