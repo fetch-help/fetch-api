@@ -11,7 +11,7 @@
     <groupId>com.fetch</groupId>
     <artifactId>persist</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>user-profile</name>
+    <name>persistence-service</name>
     <description>Persistence service</description>
 
     <properties>

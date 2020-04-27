@@ -2,19 +2,30 @@ package com.fetch.web.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cart implements Serializable {
 
-    private List<CartItem> items = new ArrayList<>();
+    private Set<CartItem> items = new LinkedHashSet<>();
 
-    public List<CartItem> getItems() {
+    public Set<CartItem> getItems() {
         return items;
     }
 
-    public void setItems(List<CartItem> items) {
+    public void setItems(Set<CartItem> items) {
         this.items = items;
     }
+
+    public void addItem(CartItem ci){
+        items.add(ci);
+    }
+
+    public void removeItem(CartItem ci){
+        items.remove(ci);
+    }
+
 
     @Override
     public String toString() {
