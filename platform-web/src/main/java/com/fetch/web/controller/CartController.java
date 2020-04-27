@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,18 +31,18 @@ public class CartController {
     @CrossOrigin(origins = "http://localhost:9001")
     @GetMapping("/ip")
     public String ip(HttpServletRequest request) {
-        return UUID.randomUUID().toString();
+        return request.getRemoteAddr();
     }
 
     @CrossOrigin(origins = "http://localhost:9001")
     @GetMapping("/get")
-    public Cart get(@RequestParam String userIdentifier, Authentication authentication) {
+    public List<CartItem> get(@RequestParam String userIdentifier, Authentication authentication) {
         //TODO
         //doChecks(userIdentifier, authentication);
         if(!cartCache.contains(userIdentifier)){
             throw new IllegalArgumentException(userIdentifier);
         }
-        return cartCache.get(userIdentifier);
+        return new ArrayList<>(cartCache.get(userIdentifier).getItems());
     }
 
     @CrossOrigin(origins = "http://localhost:9001")
