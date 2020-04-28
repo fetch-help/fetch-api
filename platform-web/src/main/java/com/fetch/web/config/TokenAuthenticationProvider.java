@@ -26,10 +26,16 @@ final class TokenAuthenticationProvider extends AbstractUserDetailsAuthenticatio
     @Override
     protected UserDetails retrieveUser(final String username, final UsernamePasswordAuthenticationToken authentication) {
         final Object token = authentication.getCredentials();
-        return Optional
-                .ofNullable(token)
-                .map(String::valueOf)
-                .flatMap(auth::findByToken)
-                .orElseThrow(() -> new UsernameNotFoundException("Cannot find user with authentication token=" + token));
+        String tok = String.valueOf(token);
+        if(tok.startsWith("JSESSIONID")){
+            return auth.findBySession(tok).get();
+        }
+        else {
+            return Optional
+                    .ofNullable(token)
+                    .map(String::valueOf)
+                    .flatMap(auth::findByToken)
+                    .orElseThrow(() -> new UsernameNotFoundException("Cannot find user with authentication token=" + token));
+        }
     }
 }

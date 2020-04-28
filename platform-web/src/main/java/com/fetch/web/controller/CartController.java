@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,59 +29,56 @@ public class CartController {
 
     CartCache cartCache = new CartCache();
 
-    @CrossOrigin(origins = "http://localhost:9001")
     @GetMapping("/ip")
-    public String ip(HttpServletRequest request) {
-        return request.getRemoteAddr();
+    public String ip(HttpSession session) {
+        return session.getId();
     }
 
-    @CrossOrigin(origins = "http://localhost:9001")
     @GetMapping("/get")
-    public List<CartItem> get(@RequestParam String userIdentifier, Authentication authentication) {
+    public List<CartItem> get(HttpSession session, Authentication authentication) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        if(!cartCache.contains(userIdentifier)){
-            throw new IllegalArgumentException(userIdentifier);
+        if(!cartCache.contains(session.getId())){
+            throw new IllegalArgumentException(session.getId());
         }
-        return new ArrayList<>(cartCache.get(userIdentifier).getItems());
+        return new ArrayList<>(cartCache.get(session.getId()).getItems());
     }
 
-    @CrossOrigin(origins = "http://localhost:9001")
     @PostMapping("/add")
-    public void post(@NonNull @RequestParam String userIdentifier,
+    public void post(HttpSession session,
                      @NonNull @RequestParam String productId,
-                     @NonNull @RequestParam String qty, Authentication authentication) {
+                     @NonNull @RequestParam String qty) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        if(!cartCache.contains(userIdentifier)){
+        if(!cartCache.contains(session.getId())){
             Cart c = new Cart();
             c.addItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
-            cartCache.add(userIdentifier, c);
+            cartCache.add(session.getId(), c);
         }
         else{
-            cartCache.get(userIdentifier).addItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
+            cartCache.get(session.getId()).addItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
         }
 
     }
 
     @CrossOrigin(origins = "http://localhost:9001")
     @PostMapping("/remove")
-    public void remove(@NonNull @RequestParam String userIdentifier,
+    public void remove(HttpSession session,
                      @NonNull @RequestParam String productId,
-                     @NonNull @RequestParam String qty, Authentication authentication) {
+                     @NonNull @RequestParam String qty) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        if(cartCache.contains(userIdentifier)){
-            cartCache.get(userIdentifier).removeItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
+        if(cartCache.contains(session.getId())){
+            cartCache.get(session.getId()).removeItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
         }
     }
 
     @CrossOrigin(origins = "http://localhost:9001")
     @DeleteMapping("/delete")
-    public void delete(@RequestParam String userIdentifier, Authentication authentication) {
+    public void delete(HttpSession session) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        cartCache.remove(userIdentifier);
+        cartCache.remove(session.getId());
     }
 
     private void doChecks(final String userIdentifier, Authentication authentication) {

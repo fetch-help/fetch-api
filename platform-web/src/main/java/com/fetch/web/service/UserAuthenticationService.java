@@ -1,6 +1,8 @@
 package com.fetch.web.service;
 
+import com.fetch.persist.model.User;
 import com.fetch.web.model.JwtUser;
+import com.fetch.web.model.SessionUser;
 
 import java.util.Optional;
 
@@ -13,5 +15,7 @@ public interface UserAuthenticationService {
      * @return
      */
     Optional<JwtUser> findByToken(String token);
+
+    Optional<SessionUser> findBySession(String sessionId);
 
 }
