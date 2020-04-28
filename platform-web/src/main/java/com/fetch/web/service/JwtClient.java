@@ -1,6 +1,8 @@
 package com.fetch.web.service;
 
 
+import com.fetch.persist.model.PostalCode;
+import com.fetch.persist.model.User;
 import feign.QueryMap;
 import feign.RequestLine;
 
@@ -15,4 +17,6 @@ public interface JwtClient {
     @RequestLine("POST /api/v1/token/validate")
         //@Headers("Content-Type: application/json")
     Map<String, String> validateToken(@QueryMap Map<String, String> params);
+
+
 }
