@@ -1,4 +1,4 @@
-package com.fetch.web.model;
+package com.fetch.merchant.model;
 
 public class PostCode<T> {
 

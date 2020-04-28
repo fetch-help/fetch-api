@@ -12,6 +12,10 @@ import java.util.Map;
 
 public interface PersistClient {
 
+    @RequestLine("GET /api/v1/persist/findOne")
+        //@Headers("Content-Type: application/json")
+    PostalCode findByPostCode(@QueryMap Map<String, String> params);
+
     @RequestLine("POST /api/v1/persist/save?type=User")
     @Headers("Content-Type: application/json")
     void createUser(User user);

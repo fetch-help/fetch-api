@@ -16,7 +16,7 @@ print(payload)
 
 headers = {'content-type': 'application/json'}
 params = {}
-url = 'http://localhost:8086/public/api/v1/postcode/merchant-post-codes'
+url = 'http://localhost:8084/public/api/v1/merchant/postCodes'
 r = requests.post(url, data=json.dumps(payload), params=params, headers=headers)
 print (r.status_code)
 print (r.text)

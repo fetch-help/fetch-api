@@ -147,4 +147,12 @@ public class PersistClientAdapter {
         params.put("postCode", postalCode);
         return client.getProductCatalogWithProductsInStock(params);
     }
+
+    public PostalCode findByPostCode(String postCode){
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("type", PostalCode.class.getSimpleName());
+        params.put("attr", "code");
+        params.put("value", postCode);
+        return client.findByPostCode(params);
+    }
 }

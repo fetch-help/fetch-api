@@ -1,10 +1,10 @@
-package com.fetch.web.controller;
+package com.fetch.merchant.controller;
 
+import com.fetch.merchant.model.KV;
+import com.fetch.merchant.model.PostCode;
+import com.fetch.merchant.service.PersistClientAdapter;
+import com.fetch.merchant.util.Haversine;
 import com.fetch.persist.model.PostalCode;
-import com.fetch.web.model.KV;
-import com.fetch.web.model.PostCode;
-import com.fetch.web.service.PersistClientAdapter;
-import com.fetch.web.util.Haversine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +32,11 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-/**
- * https://github.com/jakedouglas/fnv-java/blob/master/src/main/java/com/bitlove/FNV.java
- */
 @RestController
-@RequestMapping("public/api/v1/postcode")
-public class PostCodeController {
+@RequestMapping("api/v1/merchant")
+public class MerchantPostcodeController extends MerchantAbstractController{
 
-    Logger log = LoggerFactory.getLogger(PostCodeController.class);
+    Logger log = LoggerFactory.getLogger(MerchantPostcodeController.class);
 
     @Autowired
     PersistClientAdapter persistClient;
@@ -49,7 +46,7 @@ public class PostCodeController {
     private static final BigInteger MOD64 = new BigInteger("2").pow(64);
 
 
-    final CopyOnWriteArrayList<PostCode<String>> postCodesList = new CopyOnWriteArrayList<>();
+    final CopyOnWriteArrayList<PostCode<String>> merchantPostCodesList = new CopyOnWriteArrayList<>();
 
     final Comparator<Map.Entry<String, Double>> valueComparator = (Map.Entry<String, Double> e1, Map.Entry<String, Double> e2) -> {
         Double v1 = e1.getValue();
@@ -58,25 +55,25 @@ public class PostCodeController {
     };
 
 
-    @PostMapping("/merchant-post-codes")
+    @PostMapping("/postCodes")
     @ResponseBody
     public KV<String, String> post(@RequestBody List<PostCode<String>> postCodes) {
-        Set<String> existingPostCodes = postCodesList.stream().map(PostCode::getPostCode).collect(Collectors.toSet());
+        Set<String> existingPostCodes = merchantPostCodesList.stream().map(PostCode::getPostCode).collect(Collectors.toSet());
         List<PostCode<String>> postCodesToAdd = postCodes.stream().filter(p -> !existingPostCodes.contains(p.getPostCode())).collect(Collectors.toList());
-        int before = postCodesList.size();
-        postCodesList.addAll(postCodesToAdd);
-        int after = postCodesList.size();
+        int before = merchantPostCodesList.size();
+        merchantPostCodesList.addAll(postCodesToAdd);
+        int after = merchantPostCodesList.size();
         return new KV<String, String>(String.join("=","before", String.valueOf(before)), String.join("=",
                 "after", String.valueOf(after)));
     }
 
-    @GetMapping("/merchant-post-codes")
+    @GetMapping("/postCodes")
     @ResponseBody
     public List<PostCode<String>> get() {
-        return new ArrayList<PostCode<String>>(postCodesList);
+        return new ArrayList<PostCode<String>>(merchantPostCodesList);
     }
 
-    @GetMapping("/merchant-post-codes-by-distance")
+    @GetMapping("/findMerchantPostCodesByDistance")
     @ResponseBody
     public Map<String, Double> findBy(@NotNull @RequestParam String postalCode) {
 
@@ -87,7 +84,7 @@ public class PostCodeController {
         final PostCode<String> postCode = new PostCode<>(pCode.getCode(), pCode.getLat(), pCode.getLon());
         Map<String, Double> postcodeAndDistance = new HashMap<>();
         final Haversine h1 = new Haversine();
-        postCodesList.forEach(p -> {
+        merchantPostCodesList.forEach(p -> {
             postcodeAndDistance.put(p.getPostCode(), h1.distance(p, postCode));
         });
         //get all the entries and convert Set to List
@@ -102,9 +99,9 @@ public class PostCodeController {
         return sortedByDistance;
     }
 
-    @DeleteMapping("/clear-merchant-post-codes")
+    @DeleteMapping("/clearMerchantPostCodes")
     public void clear() {
-        postCodesList.clear();
+        merchantPostCodesList.clear();
     }
 
 

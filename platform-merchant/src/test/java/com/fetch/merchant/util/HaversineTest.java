@@ -1,6 +1,6 @@
-package com.fetch.web.util;
+package com.fetch.merchant.util;
 
-import com.fetch.web.model.PostCode;
+import com.fetch.merchant.model.PostCode;
 import org.junit.Assert;
 import org.junit.Test;
 
