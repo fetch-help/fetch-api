@@ -28,9 +28,17 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/error/**"),
-            new AntPathRequestMatcher("/public/**")
+            new AntPathRequestMatcher("/public/**"),
+            new AntPathRequestMatcher("/swagger-ui.html"),
+            new AntPathRequestMatcher("/v2/api-docs"),
+            new AntPathRequestMatcher("/v2/api-docs/**"),
+            new AntPathRequestMatcher("/webjars/**")
+
     );
-    private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
+    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/api/v1/merchant/**")
+    );
+
 
     TokenAuthenticationProvider provider;
 

@@ -21,6 +21,7 @@
 		<joda-time.version>2.10.1</joda-time.version>
 		<junit.version>4.12</junit.version>
 		<mockito.version>2.24.0</mockito.version>
+		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 	</properties>
 
 	<dependencies>
@@ -74,6 +75,21 @@
 			<artifactId>mockito-core</artifactId>
 			<version>${mockito.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox-swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox-swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-bean-validators</artifactId>
+			<version>${springfox-swagger2.version}</version>
 		</dependency>
 	</dependencies>
 

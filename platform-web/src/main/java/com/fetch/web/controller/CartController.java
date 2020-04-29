@@ -30,55 +30,61 @@ public class CartController {
     CartCache cartCache = new CartCache();
 
     @GetMapping("/ip")
-    public String ip(HttpSession session) {
+    public String ip(HttpSession session, @RequestParam String time) {
+        log.info("Getting an identifier {}"+ session.getId());
         return session.getId();
     }
 
     @GetMapping("/get")
-    public List<CartItem> get(HttpSession session, Authentication authentication) {
+    public List<CartItem> get(@NonNull @RequestParam String id, @RequestParam String time) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        if(!cartCache.contains(session.getId())){
-            throw new IllegalArgumentException(session.getId());
+        log.info("Getting the cart for identifier {}"+ id);
+        if(!cartCache.contains(id)){
+            throw new IllegalArgumentException(id);
         }
-        return new ArrayList<>(cartCache.get(session.getId()).getItems());
+        return new ArrayList<>(cartCache.get(id).getItems());
     }
 
     @PostMapping("/add")
-    public void post(HttpSession session,
+    public void post(@NonNull @RequestParam String id,
                      @NonNull @RequestParam String productId,
-                     @NonNull @RequestParam String qty) {
+                     @NonNull @RequestParam String qty,
+                     @RequestParam String time) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        if(!cartCache.contains(session.getId())){
+        log.info("Adding product {} to the cart for identifier {}", productId, id);
+        if(!cartCache.contains(id)){
             Cart c = new Cart();
             c.addItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
-            cartCache.add(session.getId(), c);
+            cartCache.add(id, c);
         }
         else{
-            cartCache.get(session.getId()).addItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
+            cartCache.get(id).addItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
         }
 
     }
 
-    @CrossOrigin(origins = "http://localhost:9001")
     @PostMapping("/remove")
-    public void remove(HttpSession session,
+    public void remove(@NonNull @RequestParam String id,
                      @NonNull @RequestParam String productId,
-                     @NonNull @RequestParam String qty) {
+                     @NonNull @RequestParam String qty,
+                       @RequestParam String time) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        if(cartCache.contains(session.getId())){
-            cartCache.get(session.getId()).removeItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
+        log.info("Removing product {} from the cart for identifier {}", productId, id);
+        if(cartCache.contains(id)){
+            cartCache.get(id).removeItem(new CartItem(Long.parseLong(productId), Integer.parseInt(qty)));
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:9001")
     @DeleteMapping("/delete")
-    public void delete(HttpSession session) {
+    public void delete(@NonNull @RequestParam String id,
+                       @RequestParam String time) {
         //TODO
         //doChecks(userIdentifier, authentication);
-        cartCache.remove(session.getId());
+        log.info("Deleting the cart for identifier {}", id);
+        cartCache.remove(id);
     }
 
     private void doChecks(final String userIdentifier, Authentication authentication) {

@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableCaching
 public class MerchantApplication {
 
     public static void main(String[] args) {
