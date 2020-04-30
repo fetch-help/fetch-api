@@ -67,6 +67,7 @@ public class MerchantPostcodeController extends MerchantAbstractController{
                 "after", String.valueOf(after)));
     }
 
+
     @GetMapping("/postCodes")
     @ResponseBody
     public List<PostCode<String>> get() {
@@ -75,7 +76,7 @@ public class MerchantPostcodeController extends MerchantAbstractController{
 
     @GetMapping("/findMerchantPostCodesByDistance")
     @ResponseBody
-    public Map<String, Double> findBy(@NotNull @RequestParam String postalCode) {
+    public Map<String, Double> findBy(@NotNull @RequestParam String postalCode, @RequestParam String time) {
 
         PostalCode pCode = persistClient.findByPostCode(postalCode);
         if(pCode ==null){

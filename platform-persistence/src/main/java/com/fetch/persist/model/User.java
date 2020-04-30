@@ -6,11 +6,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name="fetch_user")
 public class User extends ModelId{
 
     @Version

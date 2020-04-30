@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class Cart implements Serializable {
 
+    private String postCode;
+
     private Set<CartItem> items = new LinkedHashSet<>();
 
     public Set<CartItem> getItems() {
@@ -27,10 +29,19 @@ public class Cart implements Serializable {
     }
 
 
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
     @Override
     public String toString() {
         return "Cart{" +
-                "items=" + items +
+                "postCode='" + postCode + '\'' +
+                ", items=" + items +
                 '}';
     }
 }

@@ -17,7 +17,7 @@
     <properties>
         <com.fetch.persist.original.before>persist-0.0.1-SNAPSHOT.jar.original</com.fetch.persist.original.before>
         <com.fetch.persist.original.after>persist-0.0.1-SNAPSHOT-original.jar</com.fetch.persist.original.after>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
         <commons-lang.version>3.8.1</commons-lang.version>
         <joda-time.version>2.10.1</joda-time.version>
         <junit.version>4.12</junit.version>
@@ -104,6 +104,19 @@
             <artifactId>springfox-bean-validators</artifactId>
             <version>${springfox-swagger2.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.12</version>
+        </dependency>
+        <!--
+        dont uncomment until stability issues are fixed
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -121,8 +134,8 @@
                         <configuration>
                             <target>
                                 <copy file="${project.build.directory}/${com.fetch.persist.original.before}"
-                                      tofile="${project.build.directory}/${com.fetch.persist.original.after}" />
-                             </target>
+                                      tofile="${project.build.directory}/${com.fetch.persist.original.after}"/>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -134,8 +147,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -153,6 +166,53 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.8.9</version>
+                <configuration>
+                    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.liquibase.ext</groupId>
+                        <artifactId>liquibase-hibernate5</artifactId>
+                        <version>3.7</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-beans</artifactId>
+                        <version>5.2.6.RELEASE</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework.data</groupId>
+                        <artifactId>spring-data-jpa</artifactId>
+                        <version>2.2.7.RELEASE</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.validation</groupId>
+                        <artifactId>validation-api</artifactId>
+                        <version>2.0.1.Final</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.hibernate.validator</groupId>
+                        <artifactId>hibernate-validator</artifactId>
+                        <version>6.1.4.Final</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.el</groupId>
+                        <artifactId>javax.el-api</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish</groupId>
+                        <artifactId>javax.el</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
+
+                </dependencies>
+            </plugin>
+
         </plugins>
     </build>
     <reporting>
